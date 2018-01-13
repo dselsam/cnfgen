@@ -268,7 +268,7 @@ def readGraph(input_file,graph_type,file_format='autodetect',multi_edges=False):
     elif file_format=='gml':
 
         try:
-            G=grtype(networkx.read_gml(input_file))
+            G=grtype(networkx.read_gml(input_file, label='id'))
         except networkx.NetworkXError,errmsg:
             raise ValueError("[Parse error in GML input] {} ".format(errmsg))
 
@@ -787,12 +787,12 @@ def _write_graph_kthlist_format(G,output_file, bipartition = False):
     # we need numerical indices for the vertices
     # adj list in the same order
     indices = { v:i for (i,v) in enumerate(enumerate_vertices(G),start=1)}
-    
+
     if bipartition:
         V, _ = bipartite_sets(G)
     else:
         V    = enumerate_vertices(G)
-        
+
     from cStringIO import StringIO
     output = StringIO()
 
